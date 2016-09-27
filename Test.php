@@ -3,7 +3,20 @@
 
   $db = new DataBase("dbcalifparciales");
   $db->conectar();
-  $respuesta = $db->seleccionar("alumnos", ["id", "nombrealumno", "correoe"], ["id" => 2]);
+
+  # Seleccionar:
+  #$respuesta = $db->seleccionar("alumnos", ["id", "nombrealumno", "correoe"], ["id" => 2]);
+
+  # Agregar:
+  # $columnas = ["id", "matricula", "nombrealumno", "carrera", "correoe", "direccion", "colonia", "cpostal", "telefono", "fingresoalum", "pwdalumno"];
+  # $valores = [1, 00110811, "Alumno1", "LIS", "jcdm2207@hotmail.com", "DireccionA1", "colonia1", "97111", "9991223344", "2000-08-01", "pwdalum01"];
+  # $respuesta = $db->insertar( "alumnos", $columnas, $valores );
+
+  # Eliminar:
+  #$respuesta = $db->eliminar("alumnos", ['id' => 1, 'cpostal' => '97111']);
+
+  $respuesta = $db->seleccionar("alumnos", ["id"], ['id'=>3]);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +27,6 @@
   </head>
   <body>
     <div>
-      <span class='label'>Resultado: </span>
       <span class='answer'><?php echo $respuesta; ?></span>
     </div>
   </body>

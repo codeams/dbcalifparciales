@@ -39,9 +39,61 @@
 
     public function eliminar( $tabla, $criterios ) {
 
+      $query = "DELETE FROM $tabla WHERE ";
+      $indexCriterios = 0;
+
+      foreach ( $criterios as $criterio => $valor ) {
+
+        if ( $indexCriterios != 0 ) $query .= ' AND ';
+
+        $query .= "$criterio=$valor";
+        $indexCriterios++;
+
+      }
+
+      $respuesta = mysql_query( $query, $this->conexion );
+
+      if (! $respuesta )
+        return 'No se ha podido eliminar los datos: ' . mysql_error( $this->conexion );
+
+      else
+        return 'Los datos se han eliminado correctamente.';
+
     }
 
-    public function agregar( $tabla, $columnas, $valores ) {
+    public function insertar( $tabla, $columnas, $valores ) {
+
+      $query = "INSERT INTO " . $tabla . " (";
+      $indexColumnas = 0;
+
+      foreach ( $columnas as $columna ) {
+        if ( $indexColumnas != 0 ) $query .= ", ";
+
+        $query .= $columna;
+
+        $indexColumnas++;
+      }
+
+      $query .= ") VALUES (";
+      $indexValores = 0;
+
+      foreach ( $valores as $valor ) {
+        if ( $indexValores != 0 ) $query .= ", ";
+
+        $query .= "'$valor'";
+
+        $indexValores++;
+      }
+
+      $query .= ")";
+
+      $respuesta = mysql_query( $query, $this->conexion );
+
+      if (! $respuesta )
+        return 'No se ha podido insertar los datos: ' . mysql_error( $this->conexion );
+
+      else
+        return 'Los datos se han insertado con éxito.';
 
     }
 
