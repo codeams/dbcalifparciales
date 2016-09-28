@@ -1,7 +1,7 @@
 <?php
-  require "DataBase.php";
+  require 'DataBase.php';
 
-  $db = new DataBase("dbcalifparciales");
+  $db = new DataBase('dbcalifparciales');
   $db->conectar();
 
   # Seleccionar:
@@ -15,7 +15,7 @@
   # Eliminar:
   #$respuesta = $db->eliminar("alumnos", ['id' => 1, 'cpostal' => '97111']);
 
-  $respuesta = $db->seleccionar("alumnos", ["id"], ['id'=>4]);
+  $respuesta = $db->seleccionar('alumnos', ['id'], ['id'=>4]);
 
 ?>
 <!DOCTYPE html>
