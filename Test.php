@@ -15,7 +15,7 @@
   # Eliminar:
   #$respuesta = $db->eliminar("alumnos", ['id' => 1, 'cpostal' => '97111']);
 
-  $respuesta = $db->seleccionar("alumnos", ["id"], ['id'=>3]);
+  $respuesta = $db->seleccionar("alumnos", ["id"], ['id'=>4]);
 
 ?>
 <!DOCTYPE html>
