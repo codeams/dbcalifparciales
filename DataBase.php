@@ -163,8 +163,6 @@
 
     public function getRegistrarionsByTeacherID( $teacherID ) {
 
-      # $query = "SELECT a.nombrealumno, C.matricula, C.clvasig FROM calificaciones C LEFT JOIN alumnos A on a.matricula = c.matricula WHERE C.clvprof=1727"
-
       $query = 'SELECT a.nombrealumno, c.matricula, c.clvasig, c.cpar1, c.cpar2, c.cpar3, c.cpar4, c.cpar5, c.cpar6 ';
       $query .= "FROM calificaciones c INNER JOIN alumnos a ON a.matricula = c.matricula AND c.clvprof=$teacherID";
 
@@ -173,34 +171,39 @@
       if ( $areClassRegistrarions ) {
 
         $fetchedClassRegistrarions = $areClassRegistrarions;
-        $return['classRegistrations'] = array();
+        $classRegistrations = array();
 
         while ( $classRegistration = mysql_fetch_assoc( $fetchedClassRegistrarions ) ) {
-          array_push( $return['classRegistrations'], $classRegistration );
+          array_push( $classRegistrations, $classRegistration );
         }
 
-        $return['success'] = true;
-
-        return $return;
+        return $classRegistrations;
 
       }
 
-      else return [ 'success' => false, 'classRegistrations' => null ];
+      else return null;
 
     }
 
     public function groupRegistrarionsBySubjects( $classRegistrations ) {
 
+      # Verifying the entry values:
+      $arentRegistrarionsInClass = !( is_array( $classRegistrations ) and count( $classRegistrations ) > 0 );
+      if ( $arentRegistrarionsInClass ) return null;
+
+      # Grouping registrarions:
       $groupedRegistrarions = array();
 
       foreach ( $classRegistrations as $classRegistration ) {
 
         $subjectKey = $classRegistration['clvasig'];
+        unset( $classRegistration['clavasig'] );
+
         $isSubjectNotInArray = !isset( $groupedRegistrarions[ $subjectKey ] );
 
-        if ( $isSubjectNotInArray ) $groupedRegistrarions[ $subjectKey ] = array( 'clvasig' => $subjectKey );
+        if ( $isSubjectNotInArray ) $groupedRegistrarions[ $subjectKey ] = array( 'clvasig' => $subjectKey, 'registrarions' => array() );
 
-        array_push( $groupedRegistrarions[ $subjectKey ], $classRegistration );
+        $groupedRegistrarions[ $subjectKey ]['registrarions'][ $classRegistration['matricula'] ] = $classRegistration;
 
       }
 
