@@ -1,16 +1,35 @@
 <?php
 
-  function printJson( $data ) {
+  function areParametersValid( $parameters ) {
 
-    print( json_encode( [ 'success' => 'true', 'data' => $data ] ) );
-    exit();
+    if( !is_array( $parameters ) ) $parameters = array( $parameters );
+
+    foreach ( $parameters as $parameter ) {
+
+      $isNotValid = !isset( $_GET[$parameter] ) || $_GET[$parameter] == '';
+
+      if ( $isNotValid ) return false;
+
+    }
+
+    return true;
 
   }
 
-  function isValid( $variable ) {
+  function isParameterValid( $parameter ) {
 
-    $isValid = isset( $variable ) && !is_null( $variable ) && $variable != '';
+    $isValid = isset( $_GET[$parameter] ) && ( $_GET[$parameter] != '' );
     return $isValid;
+
+  }
+
+  function printJson( $success, $data ) {
+
+    if ( $success ) $success = 'true';
+    else $success = 'false';
+
+    print( json_encode( [ 'success' => $success, 'data' => $data ] ) );
+    exit();
 
   }
 
@@ -22,21 +41,24 @@
     $db->connect( 'root' );
 
     $classRegistrations = $db->getRegistrarionsByTeacherId( $_GET['teacherId'] );
-    $areClassRegistrarions = !is_null( $classRegistrations );
+
+    $areClassRegistrarions = count( $classRegistrations ) > 0;
 
     if ( $areClassRegistrarions ) {
 
       $groupedRegistrarions = $db->groupRegistrarionsBySubjects( $classRegistrations );
+      printJson( true, $groupedRegistrarions );
 
-    } else die( "MySQL error: $db->getErrorMessage()" );
-
-    printJson( $groupedRegistrarions );
+    } else printJson( true, 'null' );
 
   }
 
-  switch( $_GET['requestType'] ) {
+  if ( isParameterValid( 'requestType' ) ) $requestType = $_GET['requestType'];
+  else die( 'Error de comunicación.' );
+
+  switch( $requestType ) {
 
     case 'getRegistrarionsByTeacherId': getRegistrarionsByTeacherId(); break;
-    default: errorIn('communication'); break;
+    default: die( 'Error de comunicación.' ); break;
 
   }
