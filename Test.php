@@ -1,8 +1,8 @@
 <?php
   require 'DataBase.php';
 
-  $db = new DataBase('dbcalifparciales');
-  $db->conectar();
+  $db = new DataBase( 'dbcalifparciales' );
+  $db->connect( 'root' );
 
   # Seleccionar:
   #$respuesta = $db->seleccionar("alumnos", ["id", "nombrealumno", "correoe"], ["id" => 2]);
@@ -15,7 +15,9 @@
   # Eliminar:
   #$respuesta = $db->eliminar("alumnos", ['id' => 1, 'cpostal' => '97111']);
 
-  $respuesta = $db->seleccionar('alumnos', ['id'], ['id'=>4]);
+  $QueryOutput = $db->selectRows( 'alumnos', ['carrera', 'nombrealumno'], 'id = 4' );
+
+  if (! $QueryOutput['success'] ) die( 'MySQL error: ' . $db->getErrorMessage() );
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +29,24 @@
   </head>
   <body>
     <div>
-      <span class='answer'><?php echo $respuesta; ?></span>
+      <?php
+        foreach ( $QueryOutput['selectedRows'] as $row ) {
+
+          $indexAttributes = 0;
+
+          foreach ( $row as $attribute => $attributeValue ) {
+
+            if ( $indexAttributes > 0 ) echo ', ';
+
+            echo "<span>$attribute = $attributeValue</span>";
+            $indexAttributes++;
+
+          }
+
+          echo '<br>';
+
+        }
+      ?>
     </div>
   </body>
 </html>
