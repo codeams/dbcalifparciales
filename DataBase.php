@@ -161,7 +161,7 @@
 
     // IMPLEMENTACION
 
-    public function getRegistrarionsByTeacherID( $teacherID ) {
+    public function getRegistrarionsByTeacherId( $teacherID ) {
 
       $query = 'SELECT a.nombrealumno, c.matricula, c.clvasig, c.cpar1, c.cpar2, c.cpar3, c.cpar4, c.cpar5, c.cpar6 ';
       $query .= "FROM calificaciones c INNER JOIN alumnos a ON a.matricula = c.matricula AND c.clvprof=$teacherID";
@@ -179,9 +179,7 @@
 
         return $classRegistrations;
 
-      }
-
-      else return null;
+      } else return null;
 
     }
 

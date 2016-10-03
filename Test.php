@@ -1,6 +1,6 @@
 <?php
 
-  $isTeacherIdDefined = isset( $_GET['id'] ) && !is_null( $_GET['id'] );
+  $isTeacherIdDefined = isset( $_GET['id'] ) && !is_null( $_GET['id'] ) && $_GET['id'] != '';
 
   if ( $isTeacherIdDefined ) $teacherID = $_GET['id'];
   else die('Ingresa por URL una id de profesor. ?id=clvprof.');
@@ -10,11 +10,15 @@
   $db = new DataBase( 'dbcalifparciales' );
   $db->connect( 'root' );
 
-  $classRegistrations = $db->getRegistrarionsByTeacherID( $teacherID );
+  $classRegistrations = $db->getRegistrarionsByTeacherId( $teacherID );
+  $areClassRegistrarions = !is_null( $classRegistrations );
 
-  if ( $classRegistrations['success'] ) {
+  if ( $areClassRegistrarions ) {
 
-    $groupedRegistrarions = $db->groupRegistrarionsBySubjects( $classRegistrations['classRegistrations'] );
+    $classRegistrations = $areClassRegistrarions;
+    $groupedRegistrarions = $db->groupRegistrarionsBySubjects( $classRegistrations );
+
+    $jsonEncodedGroupedRegistrations = json_encode( $groupedRegistrarions );
 
   } else die( 'MySQL error: ' . $db->getErrorMessage() );
 
@@ -26,6 +30,6 @@
     <title>dbcalifparciales</title>
   </head>
   <body>
-    <div><?php print( json_encode( $groupedRegistrarions ) ); ?></div>
+    <div><?php print( $jsonEncodedGroupedRegistrations ); ?></div>
   </body>
 </html>
