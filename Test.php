@@ -15,7 +15,6 @@
 
   if ( $areClassRegistrarions ) {
 
-    $classRegistrations = $areClassRegistrarions;
     $groupedRegistrarions = $db->groupRegistrarionsBySubjects( $classRegistrations );
 
     $jsonEncodedGroupedRegistrations = json_encode( $groupedRegistrarions );

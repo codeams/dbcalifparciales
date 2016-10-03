@@ -1,5 +1,7 @@
 <?php
+
   class Alumno {
+
     private id;
     private matricula;
     private nombre;
