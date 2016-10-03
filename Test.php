@@ -1,23 +1,22 @@
 <?php
+
+  $isTeacherIdDefined = isset( $_GET['id'] ) && !is_null( $_GET['id'] );
+
+  if ( $isTeacherIdDefined ) $teacherID = $_GET['id'];
+  else die('Ingresa por URL una id de profesor. ?id=clvprof.');
+
   require 'DataBase.php';
 
   $db = new DataBase( 'dbcalifparciales' );
   $db->connect( 'root' );
 
-  # Seleccionar:
-  #$respuesta = $db->seleccionar("alumnos", ["id", "nombrealumno", "correoe"], ["id" => 2]);
+  $classRegistrations = $db->getRegistrarionsByTeacherID( $teacherID );
 
-  # Agregar:
-  # $columnas = ["id", "matricula", "nombrealumno", "carrera", "correoe", "direccion", "colonia", "cpostal", "telefono", "fingresoalum", "pwdalumno"];
-  # $valores = [1, 00110811, "Alumno1", "LIS", "jcdm2207@hotmail.com", "DireccionA1", "colonia1", "97111", "9991223344", "2000-08-01", "pwdalum01"];
-  # $respuesta = $db->insertar( "alumnos", $columnas, $valores );
+  if ( $classRegistrations['success'] ) {
 
-  # Eliminar:
-  #$respuesta = $db->eliminar("alumnos", ['id' => 1, 'cpostal' => '97111']);
+    $groupedRegistrarions = $db->groupRegistrarionsBySubjects( $classRegistrations['classRegistrations'] );
 
-  $QueryOutput = $db->selectRows( 'alumnos', ['carrera', 'nombrealumno'], 'id = 4' );
-
-  if (! $QueryOutput['success'] ) die( 'MySQL error: ' . $db->getErrorMessage() );
+  } else die( 'MySQL error: ' . $db->getErrorMessage() );
 
 ?>
 <!DOCTYPE html>
@@ -25,28 +24,8 @@
   <head>
     <meta charset='utf-8'>
     <title>dbcalifparciales</title>
-    <link rel='stylesheet' href='/css/master.css' media='screen' title='no title'>
   </head>
   <body>
-    <div>
-      <?php
-        foreach ( $QueryOutput['selectedRows'] as $row ) {
-
-          $indexAttributes = 0;
-
-          foreach ( $row as $attribute => $attributeValue ) {
-
-            if ( $indexAttributes > 0 ) echo ', ';
-
-            echo "<span>$attribute = $attributeValue</span>";
-            $indexAttributes++;
-
-          }
-
-          echo '<br>';
-
-        }
-      ?>
-    </div>
+    <div><?php print( json_encode( $groupedRegistrarions ) ); ?></div>
   </body>
 </html>

@@ -159,4 +159,53 @@
 
     }
 
+    // IMPLEMENTACION
+
+    public function getRegistrarionsByTeacherID( $teacherID ) {
+
+      # $query = "SELECT a.nombrealumno, C.matricula, C.clvasig FROM calificaciones C LEFT JOIN alumnos A on a.matricula = c.matricula WHERE C.clvprof=1727"
+
+      $query = 'SELECT a.nombrealumno, c.matricula, c.clvasig, c.cpar1, c.cpar2, c.cpar3, c.cpar4, c.cpar5, c.cpar6 ';
+      $query .= "FROM calificaciones c INNER JOIN alumnos a ON a.matricula = c.matricula AND c.clvprof=$teacherID";
+
+      $areClassRegistrarions = mysql_query( $query, $this->connection );
+
+      if ( $areClassRegistrarions ) {
+
+        $fetchedClassRegistrarions = $areClassRegistrarions;
+        $return['classRegistrations'] = array();
+
+        while ( $classRegistration = mysql_fetch_assoc( $fetchedClassRegistrarions ) ) {
+          array_push( $return['classRegistrations'], $classRegistration );
+        }
+
+        $return['success'] = true;
+
+        return $return;
+
+      }
+
+      else return [ 'success' => false, 'classRegistrations' => null ];
+
+    }
+
+    public function groupRegistrarionsBySubjects( $classRegistrations ) {
+
+      $groupedRegistrarions = array();
+
+      foreach ( $classRegistrations as $classRegistration ) {
+
+        $subjectKey = $classRegistration['clvasig'];
+        $isSubjectNotInArray = !isset( $groupedRegistrarions[ $subjectKey ] );
+
+        if ( $isSubjectNotInArray ) $groupedRegistrarions[ $subjectKey ] = array( 'clvasig' => $subjectKey );
+
+        array_push( $groupedRegistrarions[ $subjectKey ], $classRegistration );
+
+      }
+
+      return $groupedRegistrarions;
+
+    }
+
   }
