@@ -10,7 +10,7 @@
   $db = new DataBase( 'dbcalifparciales' );
   $db->connect( 'root' );
 
-  $classRegistrations = $db->getRegistrarionsByTeacherId( $teacherID );
+  $classRegistrations = $db->getRegistrarionsByTeacherId( $teacherId );
   $areClassRegistrarions = !is_null( $classRegistrations );
 
   if ( $areClassRegistrarions ) {
