@@ -104,3 +104,17 @@ input[type='text'], input[type='submit'], input[type='password'], label {
 p {
   margin-bottom: 10px;
 }
+
+/* --- */
+
+.welcome-message, .page-title {
+  margin-bottom: 20px;
+}
+
+.class {
+  margin-bottom: 5px;
+  padding: 30px;
+  background-color: hsl(254,53%,50%);
+  color: white;
+  cursor: pointer;
+}

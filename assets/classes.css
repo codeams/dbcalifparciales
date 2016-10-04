@@ -1,0 +1,145 @@
+
+/**
+ * Classes document styles
+ */
+
+ *, *::before, *::after {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+ }
+
+ body, input {
+   font-size: 16px;
+   font-family: 'Open sans', sans-serif;
+ }
+
+ .content-wrapper {
+   margin: 40px auto 0;
+ }
+
+
+body.classes .content-wrapper {
+  width: 600px;
+  height: 100%;
+  margin-top: 140px;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.title {
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 600px;
+  font-size: 32px;
+  font-weight: 300;
+  background-color: white;
+  border-bottom: 1px solid black;
+  z-index: 2;
+}
+
+.title .welcome-text {
+  display: block;
+  font-size: 22px;
+}
+
+.options-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 16px;
+}
+
+.options-panel span {
+  display: inline-block;;
+  margin-top: 5px;
+  padding: 0 15px;
+  height: 35px;
+  line-height: 35px;
+  font-weight: normal;
+  background-color: hsl(254,53%,50%);
+  color: white;
+  cursor: pointer;
+}
+
+.options-panel .save {
+  background-color: hsl(143, 53%, 50%);
+}
+
+
+.class {
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid hsl(254,53%,50%);
+}
+
+.class-data {
+  padding: 0 20px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 30px;
+  font-weight: 300;
+  background-color: hsl(254,53%,50%);
+  color: white;
+  cursor: pointer;
+}
+
+.students-count {
+  float: right;
+  font-size: 16px;
+}
+
+
+.registrarion {
+  padding-left: 10px;
+  height: 45px;
+  line-height: 45px;
+}
+
+.class .registrarion:nth-child(even),
+.class .registrarion:nth-child(even) input {
+  background-color: #eee;
+}
+
+.student-data {
+  display: inline-block;
+  width: 70%;
+}
+
+.student-id {
+  margin-right: 20px;
+  font-size: 12px;
+  color: #444;
+}
+
+.grades {
+  float: right;
+  width: 30%;
+  height: 100%;
+}
+
+.partial-grade {
+  float: left;
+  outline: 0;
+  border: 1px solid transparent;
+  width: 16%;
+  height: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #777;
+  border-radius: 50%;
+}
+
+.partial-grade:hover, .partial-grade:focus {
+  color: #222;
+}
+
+.partial-grade:focus {
+  border: 1px solid hsl(254,53%,50%);
+}
