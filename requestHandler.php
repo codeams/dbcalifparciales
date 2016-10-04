@@ -74,7 +74,7 @@ function authenticateLogin() {
     createSession();
     printData();
   }
-  else printError( 'Nombre de usuario o contraseña incorrectos.' );
+  else printError( 'Clave de profesor o contraseña incorrectos.' );
 
 }
 
