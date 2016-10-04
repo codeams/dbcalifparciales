@@ -14,7 +14,7 @@ $( function() {
     dataType: 'JSON',
     beforeSend: function() {
       hideErrorMessage();
-      disableButtons( true );
+      lockUI( true );
     },
     error: function() {
       alert( 'No se ha podido completar la comunicación con el servidor.' );
@@ -23,11 +23,16 @@ $( function() {
   });
 
   /* -- Vars -- */
+  var id;
 
-  var $inputUsername =    $( '#username' );
-  var $inputPassword =    $( '#password' );
-  var $formLogin =        $( '#login' );
-  var $divErrorMessage =  $( '.error-message' );
+  var $body =               $('body');
+  var $divUiLocker =        $('.ui-locker');
+  var $divContentWrapper =  $('.content-wrapper');
+
+  var $inputUsername =      $( '#username' );
+  var $inputPassword =      $( '#password' );
+  var $formLogin =          $( '#login' );
+  var $divErrorMessage =    $( '.error-message' );
 
   /* -- Functions -- */
 
@@ -37,6 +42,8 @@ $( function() {
 
     var username = $inputUsername.val();
     var password = $inputPassword.val();
+
+    id = username;
 
     var isPasswordValid = password.length > 0;
     var isUsernameValid = username.length > 0;
@@ -54,21 +61,54 @@ $( function() {
 
   }
 
-  function session
+  function goToHomePage() {
+
+    console.log('Moving to the home page.');
+
+    $divContentWrapper.html('');
+
+    var preClassesContent = "<div class='welcome-message'>Bienvenido " + id + '</div>\n';
+    preClassesContent += "<div class='page-title'>Estos son tus grupos:</div>\n";
+    preClassesContent += "<div class='classes'>";
+
+    $divContentWrapper.append(preClassesContent);
+
+    $.ajax({
+      'data' : { 'requestType' : 'getRegistrarionsByTeacherId', 'teacherId' : id },
+      'complete' : function( data ) { console.log( data ); lockUI( false ); },
+      'success' : function( data ) {
+
+        var requestSuccess = data.success == 'true';
+
+        if ( requestSuccess ) {
+
+          $.each( data.data, function( indexClass, theClass ) {
+
+            console.log( theClass );
+
+            var classContent = "<div class='class' id='"+ theClass.clvasig +"'>";
+            classContent += "<div class='class-name'>Asignatura: "+ theClass.clvasig +"</div>";
+            classContent += "</div>";
+
+            $divContentWrapper.append(classContent);
+
+          });
+
+        } else showErrorMessage( data.errorDescription );
+
+      }
+    });
+
+    $divContentWrapper.append("</div>");
+
+  }
 
   // UI related functions
 
-  function disableButtons( shouldItDisableThem ) {
+  function lockUI( shouldItLockTheUI ) {
 
-    if ( shouldItDisableThem ) {
-      $inputUsername.attr( 'disabled', 'disabled' );
-      $inputPassword.attr( 'disabled', 'disabled' );
-    }
-
-    else {
-      $inputUsername.removeAttr( 'disabled' );
-      $inputPassword.removeAttr( 'disabled' );
-    }
+    if ( shouldItLockTheUI ) $divUiLocker.css( 'display', 'block' );
+    else $divUiLocker.css( 'display', 'none' );
 
   }
 
@@ -94,13 +134,17 @@ $( function() {
 
         $.ajax({
           'data' : { 'requestType' : 'login', 'username' : data.username, 'password' : data.password },
-          'complete' : function( data ) { console.log( data ); disableButtons( false ); },
+          'complete' : function( data ) { console.log( data ); lockUI( false ); },
           'success' : function( data ) {
 
             var loginSuccess = data.success == 'true';
 
-            if ( loginSuccess ) $('body').css( 'display', 'none' );
-            else showErrorMessage( data.errorDescription );
+            if ( loginSuccess ) {
+
+                name = data.name;
+                goToHomePage();
+
+            } else showErrorMessage( data.errorDescription );
 
           }
         });
@@ -119,7 +163,7 @@ $( function() {
 
   }
 
-  // Events
+  /* -- Events -- */
 
   $formLogin.on( 'submit', function() {
 

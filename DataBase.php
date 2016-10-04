@@ -226,4 +226,21 @@
 
     }
 
+    public function getTeacherNameByTeacherId( $teacherId ) {
+
+      $query = "SELECT nomprof FROM profesores WHERE cprof=$teacherId";
+
+      $areTeacherData = mysql_query( $query, $this->connection );
+
+      if ( $areTeacherData ) {
+
+        $fetchedTeacherName = $areTeacherData;
+        $teacherName = mysql_fetch_assoc( $fetchedTeacherName );
+
+        return $teacherName;
+
+      } else return false;
+
+    }
+
   }

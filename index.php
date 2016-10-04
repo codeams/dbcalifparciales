@@ -8,6 +8,8 @@
 
 </head><body>
 
+  <div class='ui-locker'></div>
+
   <div class='content-wrapper'>
 
     <div class='title'>Iniciar sesión</div>
