@@ -13,7 +13,7 @@
     <div class='title'>Iniciar sesión</div>
 
     <div class='instructions'>
-      <p>Utilice su cuenta UADY.</p>
+      <p>Use su cuenta UADY.</p>
       <p><a href='#'>¿Qué es esto?</a></p>
     </div>
 
