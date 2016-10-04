@@ -65,8 +65,7 @@ $( function() {
         lockUI();
       },
 
-      'complete' : function( data ) {
-        console.log( data );
+      'complete' : function() {
         unlockUI();
       },
 
