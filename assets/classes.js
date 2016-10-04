@@ -40,7 +40,7 @@ $( function() {
         var $partialGrades = $( theRegistrarion ).find( '.partial-grade' );
 
         $.each( $partialGrades, function( partialGradeIndex, thePartialGrade ) {
-          theRegistrarionObject['cpar' + partialGradeIndex ] = $( thePartialGrade ).val();
+          theRegistrarionObject['cpar' + (partialGradeIndex + 1) ] = $( thePartialGrade ).val();
         });
 
       });
@@ -62,7 +62,7 @@ $( function() {
   });
 
   Dom.$divClassData.on( 'click', function() {
-    $( this ).toggleClass( 'active' );
+    $( this ).parent().toggleClass( 'active' );
   });
 
   $( '.save' ).on( 'click', function() {
