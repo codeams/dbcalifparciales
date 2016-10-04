@@ -39,6 +39,11 @@ body, input {
   font-weight: 300;
 }
 
+.error-message {
+  display: none;
+  color: red;
+}
+
 input[type='text'],
 input[type='password'],
 input[type='submit'] {
@@ -84,7 +89,7 @@ input[type='text'], input[type='submit'], input[type='password'], label {
   margin-bottom: 14px;
 }
 
-.instructions, .form {
+.instructions, .error-message, .form {
   margin-bottom: 30px;
 }
 

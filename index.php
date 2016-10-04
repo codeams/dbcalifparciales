@@ -17,6 +17,8 @@
       <p><a href='#'>¿Qué es esto?</a></p>
     </div>
 
+    <div class='error-message'>Nombre de usuario o contraseña incorrectos.</div>
+
     <div class='form'><form id='login' name='login' action=''>
 
       <input type='text' id='username' name='username' placeholder='Clave de profesor' maxlength='20' autocomplete='off'>

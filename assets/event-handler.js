@@ -13,6 +13,7 @@ $( function() {
     type: 'POST',
     dataType: 'JSON',
     beforeSend: function() {
+      hideErrorMessage();
       disableButtons( true );
     },
     error: function() {
@@ -23,9 +24,10 @@ $( function() {
 
   /* -- Vars -- */
 
-  var $inputUsername =  $( '#username' );
-  var $inputPassword =  $( '#password' );
-  var $formLogin =      $( '#login' );
+  var $inputUsername =    $( '#username' );
+  var $inputPassword =    $( '#password' );
+  var $formLogin =        $( '#login' );
+  var $divErrorMessage =  $( '.error-message' );
 
   /* -- Functions -- */
 
@@ -52,6 +54,8 @@ $( function() {
 
   }
 
+  function session
+
   // UI related functions
 
   function disableButtons( shouldItDisableThem ) {
@@ -66,6 +70,18 @@ $( function() {
       $inputPassword.removeAttr( 'disabled' );
     }
 
+  }
+
+  function showErrorMessage( message ) {
+
+    hideErrorMessage();
+    $divErrorMessage.text( message );
+    $divErrorMessage.show();
+
+  }
+
+  function hideErrorMessage() {
+    $divErrorMessage.css( 'display', 'none' )
   }
 
   // Communication related functions
@@ -83,8 +99,8 @@ $( function() {
 
             var loginSuccess = data.success == 'true';
 
-            if ( loginSuccess ) alert( 'Bienvenido' );
-            else alert( data.errorDescription );
+            if ( loginSuccess ) $('body').css( 'display', 'none' );
+            else showErrorMessage( data.errorDescription );
 
           }
         });
