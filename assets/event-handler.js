@@ -76,8 +76,6 @@ $( function() {
 
       case 'login':
 
-        console.log( 'Requested login.' );
-
         $.ajax({
           'data' : { 'requestType' : 'login', 'username' : data.username, 'password' : data.password },
           'complete' : function( data ) { console.log( data ); disableButtons( false ); },

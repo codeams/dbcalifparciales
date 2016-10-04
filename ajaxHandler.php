@@ -1,5 +1,10 @@
 <?php
 
+  require 'DataBase.php';
+
+  $db = new DataBase( 'dbcalifparciales' );
+  $db->connect( 'root' );
+
   /* -- Data verification functions -- */
 
   function areParametersValid( $parameters ) {
@@ -48,10 +53,7 @@
 
   function getRegistrarionsByTeacherId() {
 
-    require 'DataBase.php';
-
-    $db = new DataBase( 'dbcalifparciales' );
-    $db->connect( 'root' );
+    global $db;
 
     $classRegistrations = $db->getRegistrarionsByTeacherId( $_POST['teacherId'] );
 
@@ -68,13 +70,14 @@
 
   function login() {
 
+    global $db;
+
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $isUsernameValid = $username == '1727';
-    $isPasswordValid = $password == '123';
+    $isLoginDataValid = $db->validateLoginData( $username, $password );
 
-    if ( $isUsernameValid && $isPasswordValid ) printJson( true );
+    if ( $isLoginDataValid ) printJson( true );
     else printError( 'Nombre de usuario o contraseña incorrectos.' );
 
   }

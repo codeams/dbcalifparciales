@@ -209,4 +209,21 @@
 
     }
 
+    public function validateLoginData( $username, $password ) {
+
+      $query = "SELECT pwdprof FROM profesores WHERE cprof=$username";
+
+      $isValidUsername = mysql_query( $query, $this->connection );
+
+      if ( $isValidUsername ) {
+
+        $fetchedPassword = $isValidUsername;
+        $doesPasswordMatch = $password == mysql_fetch_assoc( $fetchedPassword )['pwdprof'];
+
+        return $doesPasswordMatch;
+
+      } else return false;
+
+    }
+
   }
