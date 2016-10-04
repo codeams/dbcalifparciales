@@ -47,10 +47,11 @@ input[type='submit'] {
 
 input[type='text'],
 input[type='password'] {
+  outline: 2px solid transparent;
   padding: 8px 10px;
   border: 2px solid #ddd;
   cursor: text;
-  transition: outline 100ms;
+  transition: outline-color 400ms;
 }
 
 input[type='text']:focus,
@@ -80,7 +81,7 @@ label {
 
 input[type='text'], input[type='submit'], input[type='password'], label {
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .instructions, .form {
@@ -88,5 +89,5 @@ input[type='text'], input[type='submit'], input[type='password'], label {
 }
 
 p {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
