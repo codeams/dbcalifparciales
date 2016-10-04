@@ -21,7 +21,7 @@
 
       <input type='text' id='username' name='username' placeholder='Clave de profesor' maxlength='20' autocomplete='off'>
       <input type='password' id='password' name='password' placeholder='Contraseña' maxlength='20'>
-      <label for='keepSession'><input type='checkbox' id='keepSession' name='keepSession'> Mantener mi sesión iniciada</label>
+      <label for='keepSession'><input type='checkbox' id='keepSession' name='keepSession'> Mantener la sesión iniciada</label>
       <input type='submit' id='submit' name='submit' value='Iniciar sesión'>
 
     </form></div>
