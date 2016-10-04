@@ -82,12 +82,12 @@
   /* -- Core program -- */
 
   if ( isParameterValid( 'requestType' ) ) $requestType = $_POST['requestType'];
-  else die( 'Error de comunicación.' );
+  else printError( 'Error de comunicación: No se ha entendido el tipo de solicitud.' );
 
   switch( $requestType ) {
 
     case 'getRegistrarionsByTeacherId': getRegistrarionsByTeacherId(); break;
     case 'login': login(); break;
-    default: die( 'No such requestType. sError de comunicación.' ); break;
+    default: printError( 'Error de comunicación: Se ha hecho un tipo de solicitud no válida.' ); break;
 
   }
