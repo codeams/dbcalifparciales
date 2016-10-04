@@ -95,6 +95,13 @@ body.classes .content-wrapper {
   font-size: 16px;
 }
 
+.registrarions {
+  display: none;
+}
+
+.class.active .registrarions {
+  display: block;
+}
 
 .registrarion {
   padding-left: 10px;

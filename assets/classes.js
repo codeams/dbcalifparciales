@@ -9,13 +9,18 @@ $( function() {
   /* -- DOM access variables -- */
 
   var Dom = {
-    $logoutButton : $('.logout')
+    $buttonLogout : $( '.logout' ),
+    $divClass : $( '.class' )
   };
 
   /* -- Event listeners -- */
 
-  Dom.$logoutButton.on( 'click', function() {
+  Dom.$buttonLogout.on( 'click', function() {
     window.location.replace('logout.php');
+  });
+
+  Dom.$divClass.on( 'click', function() {
+    $( this ).toggleClass( 'active' );
   });
 
 });
