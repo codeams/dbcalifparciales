@@ -47,11 +47,51 @@ $( function() {
 
     });
 
-    console.log( gradesMap );
+    return gradesMap;
 
   }
 
   function comparePartialGradeMaps( mapOne, mapTwo ) {
+
+    var classes = mapOne;
+    registrationsToUpdate = {};
+
+    $.each( classes, function( indexClass, theClass ) {
+
+      var registrarions = theClass;
+
+      $.each( registrarions, function( indexRegistration, theRegistrarion ) {
+
+        var partialGrades = theRegistrarion;
+        var isRegistrationModified = false;
+
+        $.each( partialGrades, function( indexPartialGrade, thePartialGrade ) {
+
+          var partialGradeMapOne = mapOne[indexClass][indexRegistration][indexPartialGrade];
+          var partialGradeMapTwo = mapTwo[indexClass][indexRegistration][indexPartialGrade];
+          var partialGradesAreDifferent = partialGradeMapOne != partialGradeMapTwo;
+
+          if ( partialGradesAreDifferent ) isRegistrationModified = true;
+
+        });
+
+        if ( isRegistrationModified ) {
+
+          registrationsToUpdate[ indexRegistration ] = {};
+
+          $.each( partialGrades, function( indexPartialGrade, thePartialGrade ) {
+
+            registrationsToUpdate[ indexRegistration ][ indexPartialGrade ] = $( '#' + indexRegistration + '-' + indexPartialGrade).val();
+
+          });
+
+        }
+
+      });
+
+    });
+
+    return registrationsToUpdate;
 
   }
 
@@ -67,8 +107,12 @@ $( function() {
 
   $( '.save' ).on( 'click', function() {
 
-    getPartialGradesMap();
+    var newPartialGradesMap = getPartialGradesMap();
+    // console.log( comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap ) );
 
   });
+
+  var initialPartialGradesMap = getPartialGradesMap();
+  // console.log( initialPartialGradesMap );
 
 });
