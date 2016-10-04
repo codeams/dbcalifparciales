@@ -1,12 +1,14 @@
 <?php
 
+  /* -- Data verification functions -- */
+
   function areParametersValid( $parameters ) {
 
     if( !is_array( $parameters ) ) $parameters = array( $parameters );
 
     foreach ( $parameters as $parameter ) {
 
-      $isNotValid = !isset( $_GET[$parameter] ) || $_GET[$parameter] == '';
+      $isNotValid = !isset( $_POST[$parameter] ) || $_POST[$parameter] == '';
 
       if ( $isNotValid ) return false;
 
@@ -18,12 +20,14 @@
 
   function isParameterValid( $parameter ) {
 
-    $isValid = isset( $_GET[$parameter] ) && ( $_GET[$parameter] != '' );
+    $isValid = isset( $_POST[$parameter] ) && ( $_POST[$parameter] != '' );
     return $isValid;
 
   }
 
-  function printJson( $success, $data ) {
+  /* -- Request/Answer managing functions -- */
+
+  function printJson( $success, $data = 'null' ) {
 
     if ( $success ) $success = 'true';
     else $success = 'false';
@@ -33,6 +37,15 @@
 
   }
 
+  function printError( $errorDescription ) {
+
+    print( json_encode( [ 'success' => false, 'errorDescription' => $errorDescription ] ) );
+    exit();
+
+  }
+
+  /* -- Sequential actions functions -- */
+
   function getRegistrarionsByTeacherId() {
 
     require 'DataBase.php';
@@ -40,7 +53,7 @@
     $db = new DataBase( 'dbcalifparciales' );
     $db->connect( 'root' );
 
-    $classRegistrations = $db->getRegistrarionsByTeacherId( $_GET['teacherId'] );
+    $classRegistrations = $db->getRegistrarionsByTeacherId( $_POST['teacherId'] );
 
     $areClassRegistrarions = count( $classRegistrations ) > 0;
 
@@ -53,12 +66,28 @@
 
   }
 
-  if ( isParameterValid( 'requestType' ) ) $requestType = $_GET['requestType'];
+  function login() {
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $isUsernameValid = $username == '1727';
+    $isPasswordValid = $password == '123';
+
+    if ( $isUsernameValid && $isPasswordValid ) printJson( true );
+    else printError( 'Nombre de usuario o contraseña incorrectos.' );
+
+  }
+
+  /* -- Core program -- */
+
+  if ( isParameterValid( 'requestType' ) ) $requestType = $_POST['requestType'];
   else die( 'Error de comunicación.' );
 
   switch( $requestType ) {
 
     case 'getRegistrarionsByTeacherId': getRegistrarionsByTeacherId(); break;
-    default: die( 'Error de comunicación.' ); break;
+    case 'login': login(); break;
+    default: die( 'No such requestType. sError de comunicación.' ); break;
 
   }
