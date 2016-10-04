@@ -12,12 +12,12 @@
   $dataBase = new DataBase( 'dbcalifparciales' );
   $dataBase->connect( 'root' );
 
-  $classRegistrations = $dataBase->getRegistrarionsByTeacherId( $teacherId );
+  $classRegistrations = $dataBase->getRegistrationsByTeacherId( $teacherId );
 
   $areClassRegistrarions = count( $classRegistrations ) > 0;
 
   if ( $areClassRegistrarions ) {
-    $groupedRegistrarions = $dataBase->groupRegistrarionsBySubjects( $classRegistrations );
+    $groupedRegistrarions = $dataBase->groupRegistrationsBySubjects( $classRegistrations );
   } else $groupedRegistrarions = null;
 
 ?>

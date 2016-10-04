@@ -69,9 +69,9 @@
 
     /**
     * @param  string  $tableName
-    * @param  string  $attributes
+    * @param  string[]  $attributes
     * @param  string  $rowFilters
-    * @return [ 'success' => boolean, 'selectedRows' => [ attribute => attributeValue ][] ]
+    * @return ON FAIL: false, ON SUCCESS: [ attributeName => attributeValue ][]
     */
     public function selectRows( $tableName, $attributes, $rowFilters ) {
 
@@ -95,14 +95,14 @@
 
       if ( $areRowsFetched ) {
 
-        $compundReturnObject = [ 'success' => true, 'selectedRows' => array() ];
         $fetchedRows = $areRowsFetched;
+        $selectedRows = array();
 
-        while ( $row = mysql_fetch_assoc( $fetchedRows ) ) array_push( $compundReturnObject['selectedRows'], $row );
+        while ( $row = mysql_fetch_assoc( $fetchedRows ) ) array_push( $selectedRows, $row );
 
-        return $compundReturnObject;
+        return $selectedRows;
 
-      } else return [ 'success' => false, 'selectedRows' => null ];
+      } else return false;
 
     }
 
@@ -161,7 +161,7 @@
 
     // IMPLEMENTACION
 
-    public function getRegistrarionsByTeacherId( $teacherId ) {
+    public function getRegistrationsByTeacherId( $teacherId ) {
 
       $query = 'SELECT a.nombrealumno, c.matricula, c.clvasig, c.cpar1, c.cpar2, c.cpar3, c.cpar4, c.cpar5, c.cpar6 ';
       $query .= "FROM calificaciones c INNER JOIN alumnos a ON a.matricula = c.matricula AND c.clvprof=$teacherId";
@@ -183,7 +183,7 @@
 
     }
 
-    public function groupRegistrarionsBySubjects( $classRegistrations ) {
+    public function groupRegistrationsBySubjects( $classRegistrations ) {
 
       # Verifying the entry values:
       $arentRegistrarionsInClass = !( is_array( $classRegistrations ) and count( $classRegistrations ) > 0 );
@@ -198,7 +198,6 @@
         unset( $classRegistration['clavasig'] );
 
         $isSubjectNotInArray = !isset( $groupedRegistrarions[ $subjectKey ] );
-
         if ( $isSubjectNotInArray ) $groupedRegistrarions[ $subjectKey ] = array( 'clvasig' => $subjectKey, 'registrarions' => array() );
 
         $groupedRegistrarions[ $subjectKey ]['registrarions'][ $classRegistration['matricula'] ] = $classRegistration;
