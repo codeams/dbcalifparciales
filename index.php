@@ -35,6 +35,5 @@
 
   <script src='assets/jquery.min.js'></script>
   <script src='assets/event-handler.js'></script>
-  <script src='assets/ajax-handler.js'></script>
 
 </body></html>
