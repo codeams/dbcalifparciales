@@ -12,7 +12,7 @@ $( function() {
     $uiLocker :       $( '.ui-locker' ),
     $errorMessage :   $( '.error-message' ),
     $formLogin :      $( '#login' ),
-    $inputTeacherId :  $( '#teacherId' ),
+    $inputTeacherId : $( '#teacherId' ),
     $inputPassword :  $( '#password' )
   };
 
