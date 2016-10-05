@@ -9,8 +9,30 @@ $( function() {
   /* -- DOM access variables -- */
 
   var Dom = {
+    $uiLocker :     $( '.ui-locker' ),
+    $buttonSave :   $( '.save' ),
     $buttonLogout : $( '.logout' ),
     $divClassData : $( '.class-data' )
+  };
+
+  /* -- User Interface related functions -- */
+
+  function lockUI() {
+    Dom.$uiLocker.css( 'display', 'none' );
+    Dom.$buttonSave.text( 'guardando...' );
+  };
+
+  function unlockUI() {
+    Dom.$uiLocker.css( 'display', 'none' );
+    Dom.$buttonSave.text( 'guardar' );
+  };
+
+  function showErrorMessage( theMessage ) {
+
+  };
+
+  function hideErrorMessage() {
+
   };
 
   /* -- Procedural functions -- */
@@ -95,17 +117,7 @@ $( function() {
 
   }
 
-  /* -- Event listeners -- */
-
-  Dom.$buttonLogout.on( 'click', function() {
-    window.location.replace('logout.php');
-  });
-
-  Dom.$divClassData.on( 'click', function() {
-    $( this ).parent().toggleClass( 'active' );
-  });
-
-  $( '.save' ).on( 'click', function() {
+  function updateStudentPartialGrades() {
 
     var newPartialGradesMap = getPartialGradesMap();
     var modifiedGrades = comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap );
@@ -149,6 +161,20 @@ $( function() {
 
     });
 
+  };
+
+  /* -- Event listeners -- */
+
+  Dom.$buttonLogout.on( 'click', function() {
+    window.location.replace('logout.php');
+  });
+
+  Dom.$divClassData.on( 'click', function() {
+    $( this ).parent().toggleClass( 'active' );
+  });
+
+  Dom.$buttonSave.on( 'click', function() {
+    updateStudentPartialGrades();
   });
 
   var initialPartialGradesMap = getPartialGradesMap();

@@ -208,7 +208,7 @@
 
     }
 
-    public function validateLoginData( $username, $password ) {
+    public function authenticateUser( $username, $password ) {
 
       $query = "SELECT pwdprof FROM profesores WHERE cprof=$username";
 

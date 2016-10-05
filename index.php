@@ -1,3 +1,10 @@
+<?php
+
+  session_start();
+  $isUserLoggedIn = isset( $_SESSION['session'] );
+  if ( $isUserLoggedIn ) header('Location: classes.php');
+
+?>
 <!doctype html>
 <html><head>
 

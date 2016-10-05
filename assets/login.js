@@ -55,7 +55,7 @@ $( function() {
       dataType: 'JSON',
 
       'data' : {
-        'requestType' : 'login',
+        'requestType' : 'authenticateUser',
         'teacherId' : teacherId,
         'password' : password
       },

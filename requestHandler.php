@@ -55,7 +55,7 @@ function createSession() {
 
 }
 
-function authenticateLogin() {
+function authenticateUser() {
 
   $isEmptyLoginData = !areParametersValid( ['teacherId', 'password'] );
   if ( $isEmptyLoginData ) printError( 'Error de comunicación: No se han recibido los datos necesarios para iniciar sesión.' );
@@ -68,11 +68,11 @@ function authenticateLogin() {
   $dataBase = new DataBase( 'dbcalifparciales' );
   $dataBase->connect( 'root' );
 
-  $isLoginDataValid = $dataBase->validateLoginData( $teacherId, $password );
+  $isLoginDataValid = $dataBase->authenticateUser( $teacherId, $password );
 
   if ( $isLoginDataValid ) {
     createSession();
-    printData();
+    printData( true );
   } else printError( 'Clave de profesor o contraseña incorrectos.' );
 
 }
@@ -103,7 +103,7 @@ if ( isParameterValid( 'requestType' ) ) $requestType = $_POST['requestType'];
 else printError( 'Error de comunicación: No se ha especificado un tipo de solicitud.' );
 
 switch( $requestType ) {
-  case 'login': authenticateLogin(); break;
+  case 'authenticateUser': authenticateUser(); break;
   case 'updateStudentPartialGrades': updateStudentPartialGrades(); break;
   default: printError( 'Error de comunicación: Se desconoce el tipo de solicitud especificada.' ); break;
 }
