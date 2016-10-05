@@ -30,7 +30,7 @@
 body.classes .content-wrapper {
   width: 600px;
   height: 100%;
-  margin-top: 140px;
+  margin-top: 160px;
 }
 
 .nav {
@@ -55,6 +55,13 @@ body.classes .content-wrapper {
 .title .welcome-text {
   display: block;
   font-size: 22px;
+}
+
+.title .error-message {
+  display: none;
+  margin-top: 20px;
+  color: red;
+  font-size: 16px;
 }
 
 .options-panel {

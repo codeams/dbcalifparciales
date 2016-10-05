@@ -8,7 +8,6 @@
   $teacherId = $session['teacherId'];
 
   require 'DataBase.php';
-
   $dataBase = new DataBase( 'dbcalifparciales' );
   $dataBase->connect( 'root' );
 
@@ -40,6 +39,8 @@
         <span class='welcome-text'>Bienvenido</span>
         <span class='name'><?php echo $session['name']; ?></span>
 
+        <span class='error-message'>Error de conexión: No se han podido actualizar los datos.</span>
+
         <div class='options-panel'>
           <span class='save'>guardar</span>
           <span class='logout'>salir</span>
@@ -66,12 +67,12 @@
               <span class='student-name'><?php echo $registrarion['nombrealumno']; ?></span>
             </div>
             <div class='grades'>
-              <input type='text' class='partial-grade' id='<?php echo $registrarion['matricula']; ?>-cpar1' value='<?php echo $registrarion['cpar1']; ?>'>
-              <input type='text' class='partial-grade' id='<?php echo $registrarion['matricula']; ?>-cpar2' value='<?php echo $registrarion['cpar2']; ?>'>
-              <input type='text' class='partial-grade' id='<?php echo $registrarion['matricula']; ?>-cpar3' value='<?php echo $registrarion['cpar3']; ?>'>
-              <input type='text' class='partial-grade' id='<?php echo $registrarion['matricula']; ?>-cpar4' value='<?php echo $registrarion['cpar4']; ?>'>
-              <input type='text' class='partial-grade' id='<?php echo $registrarion['matricula']; ?>-cpar5' value='<?php echo $registrarion['cpar5']; ?>'>
-              <input type='text' class='partial-grade' id='<?php echo $registrarion['matricula']; ?>-cpar6' value='<?php echo $registrarion['cpar6']; ?>'>
+              <input type='text' class='partial-grade' id='<?php echo $class['clvasig']; ?>-<?php echo $registrarion['matricula']; ?>-cpar1' value='<?php echo $registrarion['cpar1']; ?>'>
+              <input type='text' class='partial-grade' id='<?php echo $class['clvasig']; ?>-<?php echo $registrarion['matricula']; ?>-cpar2' value='<?php echo $registrarion['cpar2']; ?>'>
+              <input type='text' class='partial-grade' id='<?php echo $class['clvasig']; ?>-<?php echo $registrarion['matricula']; ?>-cpar3' value='<?php echo $registrarion['cpar3']; ?>'>
+              <input type='text' class='partial-grade' id='<?php echo $class['clvasig']; ?>-<?php echo $registrarion['matricula']; ?>-cpar4' value='<?php echo $registrarion['cpar4']; ?>'>
+              <input type='text' class='partial-grade' id='<?php echo $class['clvasig']; ?>-<?php echo $registrarion['matricula']; ?>-cpar5' value='<?php echo $registrarion['cpar5']; ?>'>
+              <input type='text' class='partial-grade' id='<?php echo $class['clvasig']; ?>-<?php echo $registrarion['matricula']; ?>-cpar6' value='<?php echo $registrarion['cpar6']; ?>'>
             </div>
           </div>
 

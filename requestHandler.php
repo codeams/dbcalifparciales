@@ -79,10 +79,13 @@ function authenticateUser() {
 
 function updateStudentPartialGrades() {
 
-  $isStudentDataValid = areParametersValid( [ 'studentId', 'partialGrades' ] );
+  sleep(2);
+
+  $isStudentDataValid = areParametersValid( [ 'studentId', 'classId', 'partialGrades' ] );
 
   if ( $isStudentDataValid ) {
     $studentId = $_POST['studentId'];
+    $classId = $_POST['classId'];
     $partialGrades = $_POST['partialGrades'];
   } else printError( 'Error de comunicación: No se recibió la información necesaria para realizar la solicitud.' );
 
@@ -90,7 +93,7 @@ function updateStudentPartialGrades() {
   $dataBase = new DataBase( 'dbcalifparciales' );
   $dataBase->connect( 'root' );
 
-  $isUpdateSuccessful = $dataBase->updateStudentPartialGrades( $studentId, $partialGrades );
+  $isUpdateSuccessful = $dataBase->updateStudentPartialGrades( $studentId, $classId, $partialGrades );
 
   if ( $isUpdateSuccessful ) printData( true );
   else printError( 'No se ha podido actualizar los datos.' );

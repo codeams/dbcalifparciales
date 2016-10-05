@@ -12,7 +12,8 @@ $( function() {
     $uiLocker :     $( '.ui-locker' ),
     $buttonSave :   $( '.save' ),
     $buttonLogout : $( '.logout' ),
-    $divClassData : $( '.class-data' )
+    $divClassData : $( '.class-data' ),
+    $errorMessage : $( '.error-message' )
   };
 
   /* -- User Interface related functions -- */
@@ -28,11 +29,12 @@ $( function() {
   };
 
   function showErrorMessage( theMessage ) {
-
+    Dom.$errorMessage.text( theMessage );
+    Dom.$errorMessage.css( 'display', 'block' );
   };
 
   function hideErrorMessage() {
-
+    Dom.$errorMessage.css( 'display', 'none' );
   };
 
   /* -- Procedural functions -- */
@@ -73,7 +75,7 @@ $( function() {
 
   }
 
-  function comparePartialGradeMaps( mapOne, mapTwo ) {
+  function comparePartialGradesMaps( mapOne, mapTwo ) {
 
     var classes = mapOne;
     registrationsToUpdate = {};
@@ -99,11 +101,14 @@ $( function() {
 
         if ( isRegistrationModified ) {
 
-          registrationsToUpdate[ indexRegistration ] = {};
+          registrationsToUpdate[ indexRegistration ] = {
+            classId : indexClass,
+            partialGrades : {}
+          };
 
           $.each( partialGrades, function( indexPartialGrade, thePartialGrade ) {
 
-            registrationsToUpdate[ indexRegistration ][ indexPartialGrade ] = $( '#' + indexRegistration + '-' + indexPartialGrade).val();
+            registrationsToUpdate[ indexRegistration ][ 'partialGrades' ][ indexPartialGrade ] = $( '#' + indexClass + '-' +indexRegistration + '-' + indexPartialGrade).val();
 
           });
 
@@ -120,9 +125,9 @@ $( function() {
   function updateStudentPartialGrades() {
 
     var newPartialGradesMap = getPartialGradesMap();
-    var modifiedGrades = comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap );
+    var registrationsToUpdate = comparePartialGradesMaps( initialPartialGradesMap, newPartialGradesMap );
 
-    $.each( modifiedGrades, function( studentId, partialGrades ) {
+    $.each( registrationsToUpdate, function( studentId, theRegistrarion ) {
 
       $.ajax({
 
@@ -133,28 +138,29 @@ $( function() {
         'data' : {
           'requestType' : 'updateStudentPartialGrades',
           'studentId' : studentId,
-          'partialGrades' : partialGrades
+          'classId' : theRegistrarion.classId,
+          'partialGrades' : theRegistrarion.partialGrades
         },
 
         beforeSend: function() {
-
+          lockUI();
         },
 
         'complete' : function() {
-
+          unlockUI();
         },
 
         'success' : function( data ) {
 
           var updateSuccess = data.success == 'true';
 
-          if ( updateSuccess ) alert( 'success' );
-          else alert( data.errorDescription );
+          if ( updateSuccess ) window.location.replace( '' );
+          else showErrorMessage( data.errorDescription );
 
         },
 
         error: function() {
-          alert('error de ajax');
+          showErrorMessage( 'No se ha podido completar la comunicación con el servidor.' );
         }
 
       });

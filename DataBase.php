@@ -242,7 +242,7 @@
 
     }
 
-    public function updateStudentPartialGrades( $studentId, $partialGrades ) {
+    public function updateStudentPartialGrades( $studentId, $classId, $partialGrades ) {
 
       $query = 'UPDATE calificaciones SET';
       $query .= ' ';
@@ -252,14 +252,14 @@
       foreach ( $partialGrades as $partialGradeFieldName => $partialGrade ) {
 
         if ( $partialGradeIndex > 0 ) $query .= ', ';
-        $query.= "$partialGradeFieldName=$partialGrade";
+        $query .= "$partialGradeFieldName=$partialGrade";
 
         $partialGradeIndex++;
 
       }
 
       $query .= ' ';
-      $query .= "WHERE matricula=$studentId";
+      $query .= "WHERE matricula=$studentId AND clvasig='$classId'";
 
       $isUpdateSuccessful = mysql_query( $query, $this->connection );
 
