@@ -108,11 +108,53 @@ $( function() {
   $( '.save' ).on( 'click', function() {
 
     var newPartialGradesMap = getPartialGradesMap();
-    // console.log( comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap ) );
+    var modifiedGrades = comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap );
+    console.log( comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap ) );
+
+    $.each( modifiedGrades, function( studentId, partialGrades ) {
+
+      $.ajax({
+
+        url: 'requestHandler.php',
+        type: 'POST',
+        dataType: 'JSON',
+
+        'data' : {
+          'requestType' : 'updateStudentPartialGrades',
+          //'contentType' : 'application/json',
+          //'processData' : false,
+          'studentId' : studentId,
+          'partialGrades' : partialGrades
+        },
+
+        beforeSend: function() {
+
+        },
+
+        'complete' : function( data ) {
+          console.log( data.responseText );
+        },
+
+        'success' : function( data ) {
+
+          var updateSuccess = data.success == 'true';
+
+          if ( updateSuccess ) alert( 'success' );
+          else alert( data.errorDescription );
+
+        },
+
+        error: function() {
+          alert('error de ajax');
+        }
+
+      });
+
+    });
 
   });
 
   var initialPartialGradesMap = getPartialGradesMap();
-  // console.log( initialPartialGradesMap );
+  console.log( initialPartialGradesMap );
 
 });

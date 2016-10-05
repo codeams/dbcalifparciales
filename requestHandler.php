@@ -73,8 +73,27 @@ function authenticateLogin() {
   if ( $isLoginDataValid ) {
     createSession();
     printData();
-  }
-  else printError( 'Clave de profesor o contraseña incorrectos.' );
+  } else printError( 'Clave de profesor o contraseña incorrectos.' );
+
+}
+
+function updateStudentPartialGrades() {
+
+  $isStudentDataValid = areParametersValid( [ 'studentId', 'partialGrades' ] );
+
+  if ( $isStudentDataValid ) {
+    $studentId = $_POST['studentId'];
+    $partialGrades = $_POST['partialGrades'];
+  } else printError( 'Error de comunicación: No se recibió la información necesaria para realizar la solicitud.' );
+
+  require 'DataBase.php';
+  $dataBase = new DataBase( 'dbcalifparciales' );
+  $dataBase->connect( 'root' );
+
+  $isUpdateSuccessful = $dataBase->updateStudentPartialGrades( $studentId, $partialGrades );
+
+  if ( $isUpdateSuccessful ) printData( true );
+  else printError( 'No se ha podido actualizar los datos.' );
 
 }
 
@@ -85,5 +104,6 @@ else printError( 'Error de comunicación: No se ha especificado un tipo de solic
 
 switch( $requestType ) {
   case 'login': authenticateLogin(); break;
+  case 'updateStudentPartialGrades': updateStudentPartialGrades(); break;
   default: printError( 'Error de comunicación: Se desconoce el tipo de solicitud especificada.' ); break;
 }

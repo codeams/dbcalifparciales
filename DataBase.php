@@ -242,4 +242,29 @@
 
     }
 
+    public function updateStudentPartialGrades( $studentId, $partialGrades ) {
+
+      $query = 'UPDATE calificaciones SET';
+      $query .= ' ';
+
+      $partialGradeIndex = 0;
+
+      foreach ( $partialGrades as $partialGradeFieldName => $partialGrade ) {
+
+        if ( $partialGradeIndex > 0 ) $query .= ', ';
+        $query.= "$partialGradeFieldName=$partialGrade";
+
+        $partialGradeIndex++;
+
+      }
+
+      $query .= ' ';
+      $query .= "WHERE matricula=$studentId";
+
+      $isUpdateSuccessful = mysql_query( $query, $this->connection );
+
+      return $isUpdateSuccessful;
+
+    }
+
   }
