@@ -109,7 +109,6 @@ $( function() {
 
     var newPartialGradesMap = getPartialGradesMap();
     var modifiedGrades = comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap );
-    console.log( comparePartialGradeMaps( initialPartialGradesMap, newPartialGradesMap ) );
 
     $.each( modifiedGrades, function( studentId, partialGrades ) {
 
@@ -121,8 +120,6 @@ $( function() {
 
         'data' : {
           'requestType' : 'updateStudentPartialGrades',
-          //'contentType' : 'application/json',
-          //'processData' : false,
           'studentId' : studentId,
           'partialGrades' : partialGrades
         },
@@ -131,8 +128,8 @@ $( function() {
 
         },
 
-        'complete' : function( data ) {
-          console.log( data.responseText );
+        'complete' : function() {
+
         },
 
         'success' : function( data ) {
@@ -155,6 +152,5 @@ $( function() {
   });
 
   var initialPartialGradesMap = getPartialGradesMap();
-  console.log( initialPartialGradesMap );
 
 });
