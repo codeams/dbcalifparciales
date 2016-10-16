@@ -31,6 +31,8 @@
 
 </head><body class='classes'>
 
+  <div class='ui-locker'></div>
+
   <div class='content-wrapper'>
 
     <div class='nav'>

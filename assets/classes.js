@@ -19,7 +19,7 @@ $( function() {
   /* -- User Interface related functions -- */
 
   function lockUI() {
-    Dom.$uiLocker.css( 'display', 'none' );
+    Dom.$uiLocker.css( 'display', 'block' );
     Dom.$buttonSave.text( 'guardando...' );
   };
 
@@ -147,7 +147,7 @@ $( function() {
         },
 
         'complete' : function() {
-          unlockUI();
+
         },
 
         'success' : function( data ) {
@@ -160,6 +160,7 @@ $( function() {
         },
 
         error: function() {
+          unlockUI();
           showErrorMessage( 'No se ha podido completar la comunicación con el servidor.' );
         }
 

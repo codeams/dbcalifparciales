@@ -1,0 +1,14 @@
+
+Datos de ingreso al panel de control:
+  ~ URL del cpanel: http://dbcalifparciales.heliohost.org/
+  ~ Usuario: dbcalifp
+  ~ Contraseña: zaqwsxcde123
+
+Datos de acceso a la base de datos:
+  ~ Host: 216.218.192.170
+  ~ Nombre de la DB: dbcalifp_db
+  ~ Usuario: dbcalifp_admin
+  ~ Contraseña: 123zaqwsxcde
+
+Configuración actual de la base de datos:
+  Cerrado a solicitudes no declaradas en whitelist.
