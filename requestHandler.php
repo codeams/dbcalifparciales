@@ -43,6 +43,40 @@ function printError( $errorDescription ) {
 
 /* -- Procedural functions -- */
 
+function addStudent() {
+
+  /* TODO: Check for valid parameters */
+
+  $studentData = $_POST['studentData'];
+  $translatedStudentData = array();
+
+  /* TODO: Comprobar entradas validas */
+
+  $translatedStudentData['matricula'] = $studentData['student-id'];
+  $translatedStudentData['nombrealumno'] = $studentData['name'] . ' ' . $studentData['last-name'];
+  $translatedStudentData['carrera'] = $studentData['career'];
+  $translatedStudentData['correoe'] = $studentData['email'];
+  $translatedStudentData['direccion'] = $studentData['address'];
+  $translatedStudentData['colonia'] = '-';
+  $translatedStudentData['cpostal'] = $studentData['postal-code'];
+  $translatedStudentData['telefono'] = $studentData['telephone'];
+  $translatedStudentData['fingresoalum'] = $studentData['admission-date'];
+  $translatedStudentData['pwdalumno'] = '123123123';
+
+  require 'DataBase.php';
+  $dataBase = new DataBase( 'dbcalifparciales' );
+  $dataBase->connect( 'root' );
+
+  $isAdditionSuccessful = $dataBase->addStudent( $translatedStudentData );
+
+  if ( $isAdditionSuccessful ) {
+    printData( true );
+  } else {
+    printError( $dataBase->getErrorMessage() );
+  }
+
+}
+
 function createSession() {
 
   session_start();
@@ -106,6 +140,7 @@ if ( isParameterValid( 'requestType' ) ) $requestType = $_POST['requestType'];
 else printError( 'Error de comunicación: No se ha especificado un tipo de solicitud.' );
 
 switch( $requestType ) {
+  case 'addStudent': addStudent(); break;
   case 'authenticateUser': authenticateUser(); break;
   case 'updateStudentPartialGrades': updateStudentPartialGrades(); break;
   default: printError( 'Error de comunicación: Se desconoce el tipo de solicitud especificada.' ); break;

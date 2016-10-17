@@ -152,7 +152,7 @@ $( function() {
 
         'success' : function( data ) {
 
-          var updateSuccess = data.success == 'true';
+          var updateSuccess = data.success === 'true';
 
           if ( updateSuccess ) window.location.replace( '' );
           else showErrorMessage( data.errorDescription );
